@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+div {
+  position: relative;
+  display: block;
+}
+
+.App {
+  height: 100%;
+  width: 100%;
+  background-color: #495057;
+}
+
+.App-header {
+  padding: 40px 0 30px;
+  width: 280px;
+  margin: auto;
+  color: #f1f3f5;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.game-area {
+  margin: 0px auto;
+  width: 280px;
+}
+
+.scoreArea {
+  color: #f8f9fa;
+  display: flex;
+  flex-direction: row;
+}
+
+.scoreAreaInner {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
+}
+
+.score {
+  font-size: 26px;
+}
+
+.notice {
+  width: 280px;
+  font-size: 13px;
+  text-align: left;
+  color: #dee2e6;
+  margin: 30px auto 0;
+}
