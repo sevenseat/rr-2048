@@ -7,8 +7,11 @@
     "react-dom": "^16.1.1",
     "reason-scripts": "0.7.0"
   },
+  "homepage": "https://sevenseat.github.io/rr-2048",
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "bs-jest": "^0.2.0",
+    "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^5.0.0",
     "reason-react": "^0.3.0"
