@@ -7,7 +7,7 @@ type state = {board: list(list(int))};
 
 let component = ReasonReact.reducerComponent("App2k");
 
-let blankBoard = [ [0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]];
+let blankBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 
 let make = (_children) => {
   let keyDown = (event) =>
@@ -18,14 +18,16 @@ let make = (_children) => {
     | 40 => UserEvent(GameLogic.Down)
     | _ => None
     };
-    let genBoard = () => GameLogic.(blankBoard |> addCell |> addCell |> addCell);
+  let genBoard = () => GameLogic.(blankBoard |> addCell |> addCell |> addCell);
   {
     ...component,
     initialState: () => {board: genBoard()},
     reducer: (action, state) =>
       switch action {
       | UserEvent(direction) =>
-        ReasonReact.Update({board: GameLogic.transformBoard(direction, state.board) |> GameLogic.addCell})
+        ReasonReact.Update({
+          board: GameLogic.transformBoard(direction, state.board) |> GameLogic.addCell
+        })
       | Restart => ReasonReact.Update({board: genBoard()})
       | None => ReasonReact.NoUpdate
       },

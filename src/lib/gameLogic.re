@@ -77,7 +77,6 @@ let addCellHelper = (newCellPos, newCellVal, board) => {
 
 let addCell = (board) => {
   Random.init([%bs.raw {|Math.random() * 10000|}]);
-
   let numZeros = List.(board |> flatten |> filter((cell) => cell === 0) |> length);
   let newCellPos = Random.int(numZeros);
   let newCellVal = [|2, 2, 2, 2, 4|][Random.int(5)];
