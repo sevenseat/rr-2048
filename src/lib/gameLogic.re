@@ -83,4 +83,7 @@ let addCell = (board) => {
   addCellHelper(newCellPos, newCellVal, board)
 };
 
+let makeBoard = () =>
+  [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] |> addCell |> addCell |> addCell;
+
 let scoreBoard = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_left((+), 0);
