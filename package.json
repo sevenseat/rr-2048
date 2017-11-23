@@ -1,13 +1,20 @@
 {
   "name": "re2048",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "reason-scripts": "0.7.0"
   },
   "homepage": "https://sevenseat.github.io/rr-2048",
+  "keywords": [],
+  "author": "John Schweikert",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sevenseat/rr-2048.git"
+  },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
     "format": "npm run format:refmt; npm run format:prettier",
