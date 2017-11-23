@@ -5,11 +5,11 @@ module Card = {
   let make = (~value, _children) => {
     ...component,
     render: (_self) =>
-      if (value == 0) {
-        <div className="card" />
-      } else {
-        <div className=("card card_number_" ++ string_of_int(value))>
-          (ReasonReact.stringToElement(string_of_int(value)))
+      switch value {
+      | 0 => <div className="card" />
+      | value =>
+        <div className={j|card card_number_$value|j}>
+          (ReasonReact.stringToElement({j|$value|j}))
         </div>
       }
   };
