@@ -10,6 +10,7 @@
   "homepage": "https://sevenseat.github.io/rr-2048",
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
+    "format": "refmt --in-place src/**/*.re",
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
