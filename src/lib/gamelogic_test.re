@@ -4,45 +4,36 @@ open Expect;
 
 open GameLogic;
 
-/* test("empty list", () => expect(transformHelper([])) |> toEqual([]));
+let board = [[0, 2], [4, 4]];
 
-   test("zero", () => expect(transformHelper([0])) |> toEqual([]));
+let empty = [[]];
 
-   test("zero start", () => expect(transformHelper([0, 2])) |> toEqual([2]));
-
-   test("zero list", () => expect(transformHelper([0, 0, 0, 0])) |> toEqual([]));
-
-   test("consolidate 2", () => expect(transformHelper([2, 2, 3, 0])) |> toEqual([4, 3]));
-
-   test("magic list", () => expect(transformHelper([2, 2, 2, 2])) |> toEqual([4, 4]));
-
-   test("padright", () => expect(padRight(4, 0, [0, 2])) |> toEqual([0, 2, 0, 0]));
-
-   test("padright2", () => expect(padRight(4, 0, [])) |> toEqual([0, 0, 0, 0]));
-
-   test("padright3", () => expect(padRight(0, 0, [0, 2])) |> toEqual([0, 2])); */
-test("transpose", () => expect(transpose([[1, 2], [3, 4]])) |> toEqual([[1, 3], [2, 4]]));
-
-test(
-  "orientBoard Left",
-  () => expect(orientBoard(Left, PreTransform, [[1, 2], [3, 4]])) |> toEqual([[1, 2], [3, 4]])
+describe(
+  "transformBoard",
+  () => {
+    test("empty", () => expect(transformBoard(Up, [[]]) |> Array.of_list) |> toHaveLength(0));
+    test("blanks", () => expect(transformBoard(Left, [[1, 0, 0, 1]])) |> toEqual([[2, 0, 0, 0]]));
+    test("Up", () => expect(transformBoard(Up, board)) |> toEqual([[4, 2], [0, 4]]));
+    test("Down", () => expect(transformBoard(Down, board)) |> toEqual(board));
+    test("Left", () => expect(transformBoard(Left, board)) |> toEqual([[2, 0], [8, 0]]));
+    test("Right", () => expect(transformBoard(Right, board)) |> toEqual([[0, 2], [0, 8]]))
+  }
 );
 
-test(
-  "orientBoard Right",
-  () => expect(orientBoard(Right, PreTransform, [[1, 2], [3, 4]])) |> toEqual([[2, 1], [4, 3]])
+describe(
+  "scoreBoard",
+  () => {
+    test("empty", () => expect(scoreBoard([[]])) |> toEqual(0));
+    test("board", () => expect(scoreBoard(board)) |> toEqual(10))
+  }
 );
 
-test(
-  "orientBoard Up",
-  () => expect(orientBoard(Up, PreTransform, [[1, 2], [3, 4]])) |> toEqual([[1, 3], [2, 4]])
+describe(
+  "makeBoard",
+  () => {
+    test("x length", () => expect(makeBoard() |> Array.of_list) |> toHaveLength(4));
+    test("y length", () => expect(makeBoard() |> List.hd |> Array.of_list) |> toHaveLength(4));
+    test("score - min", () => expect(makeBoard() |> scoreBoard) |> toBeGreaterThanOrEqual(6));
+    test("score - max", () => expect(scoreBoard(board)) |> toBeLessThanOrEqual(12))
+  }
 );
-
-test(
-  "orientBoard Down",
-  () => expect(orientBoard(Down, PreTransform, [[1, 2], [3, 4]])) |> toEqual([[3, 1], [4, 2]])
-);
-
-test("addcell", () => expect(addCell([[1, 0], [0, 2]])) |> toEqual([[1, 2], [0, 2]]));
-
-test("scoreboard", () => expect(scoreBoard([[1, 0], [0, 2]])) |> toEqual(3));
