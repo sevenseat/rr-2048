@@ -4,54 +4,57 @@ type direction =
   | Up
   | Down;
 
-let rec padRight = (minLength, padEntry, list) =>
-  switch (minLength <= 0, list) {
-  | (true, _) => list
-  | (false, []) => [padEntry, ...padRight(minLength - 1, padEntry, [])]
-  | (false, [head, ...rest]) => [head, ...padRight(minLength - 1, padEntry, rest)]
-  };
-
-let rec transformHelper = (cells) =>
-  switch cells {
-  | [] => []
-  | [0, ...rest] => transformHelper(rest)
-  | [head, 0, ...rest] => transformHelper([head, ...rest])
-  | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
-  | [head, ...rest] => [head, ...transformHelper(rest)]
-  };
-
-let transformList = (cells) => cells |> transformHelper |> padRight(List.length(cells), 0);
-
-let rec transpose = (board) =>
-  switch board {
-  | [] => []
-  | [[], ...xss] => transpose(xss)
-  | [[x, ...xs], ...xss] => [
-      [x, ...List.map(List.hd, xss)],
-      ...transpose([xs, ...List.map(List.tl, xss)])
-    ]
-  };
-
 type orientPhase =
   | PreTransform
   | PostTransform;
 
-let orientBoard = (direction, phase, board) =>
-  switch (direction, phase) {
-  | (Left, _) => board
-  | (Right, _) => List.map(List.rev, board)
-  | (Up, _) => board |> transpose
-  | (Down, PreTransform) => board |> List.rev |> transpose
-  | (Down, PostTransform) => board |> transpose |> List.rev
+let transformBoard = (direction, board) => {
+  let transformList = (cells) => {
+    let rec transformHelper = (cells) =>
+      switch cells {
+      | [] => []
+      | [0, ...rest] => transformHelper(rest)
+      | [head, 0, ...rest] => transformHelper([head, ...rest])
+      | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
+      | [head, ...rest] => [head, ...transformHelper(rest)]
+      };
+    let rec padRight = (minLength, padEntry, list) =>
+      switch (minLength <= 0, list) {
+      | (true, _) => list
+      | (false, []) => [padEntry, ...padRight(minLength - 1, padEntry, [])]
+      | (false, [head, ...rest]) => [head, ...padRight(minLength - 1, padEntry, rest)]
+      };
+    cells |> transformHelper |> padRight(List.length(cells), 0)
   };
-
-let transformBoard = (direction, board) =>
+  let orientBoard = (direction, phase, board) => {
+    let rec transpose = (board) =>
+      switch board {
+      | [] => []
+      | [[], ...xss] => transpose(xss)
+      | [[x, ...xs], ...xss] => [
+          [x, ...List.map(List.hd, xss)],
+          ...transpose([xs, ...List.map(List.tl, xss)])
+        ]
+      };
+    switch (direction, phase) {
+    | (Left, _) => board
+    | (Right, _) => List.map(List.rev, board)
+    | (Up, _) => board |> transpose
+    | (Down, PreTransform) => board |> List.rev |> transpose
+    | (Down, PostTransform) => board |> transpose |> List.rev
+    }
+  };
   board
   |> orientBoard(direction, PreTransform)
   |> List.map(transformList)
-  |> orientBoard(direction, PostTransform);
+  |> orientBoard(direction, PostTransform)
+};
 
-let addCellHelper = (newCellPos, newCellVal, board) => {
+let addCell = (board) => {
+  Random.init([%bs.raw {|Math.random() * 10000|}]);
+  let numZeros = List.(board |> flatten |> filter((cell) => cell === 0) |> length);
+  let newCellPos = Random.int(numZeros);
+  let newCellVal = [|2, 2, 2, 2, 4|][Random.int(5)];
   let procRow = (row, startZeros) =>
     row
     |> List.fold_left(
@@ -73,14 +76,6 @@ let addCellHelper = (newCellPos, newCellVal, board) => {
        ([], 0)
      )
   |> (((b, _)) => List.rev(b))
-};
-
-let addCell = (board) => {
-  Random.init([%bs.raw {|Math.random() * 10000|}]);
-  let numZeros = List.(board |> flatten |> filter((cell) => cell === 0) |> length);
-  let newCellPos = Random.int(numZeros);
-  let newCellVal = [|2, 2, 2, 2, 4|][Random.int(5)];
-  addCellHelper(newCellPos, newCellVal, board)
 };
 
 let makeBoard = () =>
