@@ -13,19 +13,24 @@
     "format": "npm run format:refmt; npm run format:prettier",
     "format:refmt": "refmt --in-place src/**/*.re",
     "format:prettier":
-      "prettier --single-quote --write src/**/*.{js,jsx,json,css}",
+      "prettier --single-quote --write src/**/*.{js,jsx,json,css} *.json",
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:coverage": "npm test -- --coverage",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
     "prepare": "npm link bs-platform"
   },
   "lint-staged": {
     "src/**/*.{re}": ["refmt --in-place", "git add"],
-    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ],
+    "*.json": ["prettier --single-quote --write", "git add"]
   },
   "devDependencies": {
     "bs-jest": "^0.2.0",
