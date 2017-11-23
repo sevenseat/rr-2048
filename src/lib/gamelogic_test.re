@@ -24,7 +24,7 @@ describe(
   "scoreBoard",
   () => {
     test("empty", () => expect(scoreBoard([[]])) |> toEqual(0));
-    test("board", () => expect(scoreBoard(board)) |> toEqual(99))
+    test("board", () => expect(scoreBoard(board)) |> toEqual(10))
   }
 );
 
