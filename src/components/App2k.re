@@ -27,7 +27,7 @@ let make = (_children) => {
       | None => ReasonReact.NoUpdate
       },
     render: ({state, reduce}) =>
-      <div className="App">
+      <div className="Dodo">
         <EventLayer className="App" onAction=(reduce((direction) => UserEvent(direction)))>
           <div>
             <Title score=state.score onReplay=(reduce((_event) => Restart)) />
