@@ -1,4 +1,4 @@
-[%bs.raw {|require('./title.css')|}];
+[%bs.raw {|require('./Title.css')|}];
 
 let component = ReasonReact.statelessComponent("Title");
 

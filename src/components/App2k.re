@@ -1,4 +1,4 @@
-[%bs.raw {|require('./app2k.css')|}];
+[%bs.raw {|require('./App2k.css')|}];
 
 type action =
   | UserEvent(GameLogic.direction)

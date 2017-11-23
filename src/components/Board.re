@@ -1,4 +1,4 @@
-[%bs.raw {|require('./board.css')|}];
+[%bs.raw {|require('./Board.css')|}];
 
 module Card = {
   let component = ReasonReact.statelessComponent("Card");
