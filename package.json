@@ -28,6 +28,7 @@
     "src/**/*.{re}": ["refmt --in-place", "git add"],
     "src/**/*.{js,jsx,json,css}": [
       "prettier --single-quote --write",
+      "jest --bail --findRelatedTests",
       "git add"
     ],
     "*.json": ["prettier --single-quote --write", "git add"]
