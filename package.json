@@ -12,7 +12,8 @@
     "analyze": "source-map-explorer build/static/js/main.*",
     "format": "npm run format:refmt; npm run format:prettier",
     "format:refmt": "refmt --in-place src/**/*.re",
-    "format:prettier": "prettier --single-quote --write src/**/*.{js,jsx,json,css}",
+    "format:prettier":
+      "prettier --single-quote --write src/**/*.{js,jsx,json,css}",
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -23,14 +24,8 @@
     "prepare": "npm link bs-platform"
   },
   "lint-staged": {
-    "src/**/*.{re}": [
-      "refmt --in-place",
-      "git add"
-    ],
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
+    "src/**/*.{re}": ["refmt --in-place", "git add"],
+    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
   },
   "devDependencies": {
     "bs-jest": "^0.2.0",

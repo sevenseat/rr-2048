@@ -1,20 +1,15 @@
 {
   "name": "reason-scripts",
   "sources": [
-    { 
-      "dir": "src", 
+    {
+      "dir": "src",
       "subdirs": ["components", "lib"]
     }
   ],
-  "bs-dependencies": [
-    "reason-react",
-    "bs-jest"
-  ],
+  "bs-dependencies": ["reason-react", "bs-jest"],
   "reason": {
     "react-jsx": 2
   },
-  "bsc-flags": [
-    "-bs-super-errors"
-  ],
+  "bsc-flags": ["-bs-super-errors"],
   "refmt": 3
 }
