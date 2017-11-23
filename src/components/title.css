@@ -1,0 +1,22 @@
+.App-header {
+  padding: 40px 0 30px;
+  width: 280px;
+  margin: auto;
+  color: #f1f3f5;
+}
+
+.scoreArea {
+  color: #f8f9fa;
+  display: flex;
+  flex-direction: row;
+}
+
+.scoreAreaInner {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
+}
+
+.score {
+  font-size: 26px;
+}

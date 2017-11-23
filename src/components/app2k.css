@@ -1,0 +1,14 @@
+.App {
+  height: 100%;
+  width: 100%;
+  background-color: #495057;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.game-area {
+  margin: 0px auto;
+  width: 280px;
+}

@@ -28,6 +28,6 @@ let make = (~board, _children) => {
       List.map((row) => <div className="row"> (renderCells(row)) </div>, board)
       |> Array.of_list
       |> ReasonReact.arrayToElement;
-    <div className="board"> renderRows </div>
+    <div className="game-area board"> renderRows </div>
   }
 };
