@@ -10,7 +10,9 @@
   "homepage": "https://sevenseat.github.io/rr-2048",
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
-    "format": "refmt --in-place src/**/*.re",
+    "format": "npm run format:refmt; npm run format:prettier",
+    "format:refmt": "refmt --in-place src/**/*.re",
+    "format:prettier": "prettier --single-quote --write src/**/*.{js,jsx,json,css}",
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -24,6 +26,10 @@
     "src/**/*.{re}": [
       "refmt --in-place",
       "git add"
+    ],
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
     ]
   },
   "devDependencies": {
@@ -31,6 +37,7 @@
     "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^5.0.0",
+    "prettier": "^1.8.2",
     "reason-react": "^0.3.0",
     "source-map-explorer": "^1.5.0"
   }
