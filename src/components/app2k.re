@@ -13,14 +13,6 @@ type state = {
 let component = ReasonReact.reducerComponent("App2k");
 
 let make = (_children) => {
-  let keyDown = (event) =>
-    switch (ReactEventRe.Keyboard.which(event)) {
-    | 37 => UserEvent(GameLogic.Left)
-    | 38 => UserEvent(GameLogic.Up)
-    | 39 => UserEvent(GameLogic.Right)
-    | 40 => UserEvent(GameLogic.Down)
-    | _ => None
-    };
   let genState = (board) => {board, score: GameLogic.scoreBoard(board)};
   {
     ...component,
@@ -35,9 +27,13 @@ let make = (_children) => {
       | None => ReasonReact.NoUpdate
       },
     render: ({state, reduce}) =>
-      <div className="App" onKeyDown=(reduce(keyDown)) tabIndex=0>
-        <Title score=state.score onReplay=(reduce((_event) => Restart)) />
-        <div className="game-area"> <Board board=state.board /> </div>
+      <div className="App">
+        <EventLayer className="App" onAction=(reduce((direction) => UserEvent(direction)))>
+          <div>
+            <Title score=state.score onReplay=(reduce((_event) => Restart)) />
+            <div className="game-area"> <Board board=state.board /> </div>
+          </div>
+        </EventLayer>
       </div>
   }
 };
