@@ -82,3 +82,10 @@ let makeBoard = () =>
   [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] |> addCell |> addCell |> addCell;
 
 let scoreBoard = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_left((+), 0);
+
+let testGameover = (board) =>
+  List.(
+    [Left, Up]
+    |> exists((direction) => transformBoard(direction, board) |> flatten |> exists((==)(0)))
+    |> (!)
+  );

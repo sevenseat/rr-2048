@@ -37,3 +37,13 @@ describe(
     test("score - max", () => expect(scoreBoard(board)) |> toBeLessThanOrEqual(12))
   }
 );
+
+describe(
+  "testGameover",
+  () => {
+    test("empty", () => expect(testGameover([[]])) |> toEqual(true));
+    test("gameover", () => expect(testGameover([[2, 4], [4, 8]])) |> toEqual(true));
+    test("up/down", () => expect(testGameover([[2, 4], [2, 8]])) |> toEqual(false));
+    test("left/right", () => expect(testGameover([[2, 4], [8, 8]])) |> toEqual(false))
+  }
+);
