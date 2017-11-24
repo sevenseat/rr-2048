@@ -50,11 +50,12 @@ let transformBoard = (direction, board) => {
   |> orientBoard(direction, PostTransform)
 };
 
+let randomInt = (num) => Js.Math.random() *. float_of_int(num) |> Js.Math.floor_int;
+
 let addCell = (board) => {
-  Random.init([%bs.raw {|Math.random() * 10000|}]);
   let numZeros = List.(board |> flatten |> filter((cell) => cell === 0) |> length);
-  let newCellPos = Random.int(numZeros);
-  let newCellVal = [|2, 2, 2, 2, 4|][Random.int(5)];
+  let newCellPos = randomInt(numZeros);
+  let newCellVal = [|2, 2, 2, 2, 4|][randomInt(5)];
   let procRow = (row, startZeros) =>
     row
     |> List.fold_left(
