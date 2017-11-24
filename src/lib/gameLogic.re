@@ -14,7 +14,6 @@ let transformBoard = (direction, board) => {
       switch cells {
       | [] => []
       | [0, ...rest] => transformHelper(rest)
-      | [head, 0, ...rest] => transformHelper([head, ...rest])
       | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
       | [head, ...rest] => [head, ...transformHelper(rest)]
       };
@@ -53,7 +52,7 @@ let transformBoard = (direction, board) => {
 let randomInt = (num) => Js.Math.random() *. float_of_int(num) |> Js.Math.floor_int;
 
 let addCell = (board) => {
-  let numZeros = List.(board |> flatten |> filter((cell) => cell === 0) |> length);
+  let numZeros = List.(board |> flatten |> filter((===)(0)) |> length);
   let newCellPos = randomInt(numZeros);
   let newCellVal = [|2, 2, 2, 2, 4|][randomInt(5)];
   let procRow = (row, startZeros) =>
