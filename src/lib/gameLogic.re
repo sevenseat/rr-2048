@@ -81,7 +81,7 @@ let addCell = (board) => {
 let make = () =>
   [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] |> addCell |> addCell |> addCell;
 
-let score = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_left((+), 0);
+let score = (board) => List.(board |> map(fold_left((+), 0)) |> fold_left((+), 0));
 
 let gameIsOver = (board) =>
   List.(
