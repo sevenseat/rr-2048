@@ -86,6 +86,5 @@ let score = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_le
 let gameIsOver = (board) =>
   List.(
     [Left, Up]
-    |> exists((direction) => transform(direction, board) |> flatten |> exists((===)(0)))
-    |> (!)
+    |> for_all((direction) => transform(direction, board) |> flatten |> for_all((!==)(0)))
   );
