@@ -31,16 +31,16 @@ let rec transpose = (ls) =>
   | ls => [List.map(List.hd, ls), ...transpose(List.map(List.tl, ls))]
   };
 
-let transformLeft = (board) => {
-  let rec transformHelper = (ls) =>
+let shiftLeft = (board) => {
+  let rec shiftHelper = (ls) =>
     switch ls {
     | [] => []
-    | [0, ...rest] => transformHelper(rest)
-    | [head, 0, ...rest] => transformHelper([head, ...rest])
-    | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
-    | [head, ...rest] => [head, ...transformHelper(rest)]
+    | [0, ...rest] => shiftHelper(rest)
+    | [head, 0, ...rest] => shiftHelper([head, ...rest])
+    | [head, next, ...rest] when head === next => [head + next, ...shiftHelper(rest)]
+    | [head, ...rest] => [head, ...shiftHelper(rest)]
     };
-  List.map((ls) => padTrim(0, List.length(ls), transformHelper(ls)), board)
+  List.map((ls) => padTrim(0, List.length(ls), shiftHelper(ls)), board)
 };
 
 let orient = (direction, phase, board) =>
@@ -52,8 +52,8 @@ let orient = (direction, phase, board) =>
   | (Down, Post) => board |> transpose |> List.rev
   };
 
-let transform = (direction, board) =>
-  board |> orient(direction, Pre) |> transformLeft |> orient(direction, Post);
+let shift = (direction, board) =>
+  board |> orient(direction, Pre) |> shiftLeft |> orient(direction, Post);
 
 let randomInt = (num) => Js.Math.random() *. float_of_int(num) |> Js.Math.floor_int;
 
@@ -91,6 +91,5 @@ let score = (board) => List.(board |> map(fold_left((+), 0)) |> fold_left((+), 0
 
 let gameIsOver = (board) =>
   List.(
-    [Left, Up]
-    |> for_all((direction) => transform(direction, board) |> flatten |> for_all((!==)(0)))
+    [Left, Up] |> for_all((direction) => shift(direction, board) |> flatten |> for_all((!==)(0)))
   );

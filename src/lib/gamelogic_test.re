@@ -9,14 +9,14 @@ let board = [[0, 2], [4, 4]];
 let empty = [[]];
 
 describe(
-  "transform",
+  "shift",
   () => {
-    test("empty", () => expect(transform(Up, [[]]) |> Array.of_list) |> toHaveLength(0));
-    test("blanks", () => expect(transform(Left, [[1, 0, 0, 1]])) |> toEqual([[2, 0, 0, 0]]));
-    test("Up", () => expect(transform(Up, board)) |> toEqual([[4, 2], [0, 4]]));
-    test("Down", () => expect(transform(Down, board)) |> toEqual(board));
-    test("Left", () => expect(transform(Left, board)) |> toEqual([[2, 0], [8, 0]]));
-    test("Right", () => expect(transform(Right, board)) |> toEqual([[0, 2], [0, 8]]))
+    test("empty", () => expect(shift(Up, [[]]) |> Array.of_list) |> toHaveLength(0));
+    test("blanks", () => expect(shift(Left, [[1, 0, 0, 1]])) |> toEqual([[2, 0, 0, 0]]));
+    test("Up", () => expect(shift(Up, board)) |> toEqual([[4, 2], [0, 4]]));
+    test("Down", () => expect(shift(Down, board)) |> toEqual(board));
+    test("Left", () => expect(shift(Left, board)) |> toEqual([[2, 0], [8, 0]]));
+    test("Right", () => expect(shift(Right, board)) |> toEqual([[0, 2], [0, 8]]))
   }
 );
 

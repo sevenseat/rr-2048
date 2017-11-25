@@ -6,7 +6,7 @@ type direction =
   | Up
   | Down;
 
-let transform: (direction, boardType) => boardType;
+let shift: (direction, boardType) => boardType;
 
 let addCell: boardType => boardType;
 

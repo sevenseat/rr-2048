@@ -19,9 +19,7 @@ let make = (_children) => {
   reducer: (action, state) =>
     switch action {
     | UserEvent(direction) =>
-      ReasonReact.Update(
-        genState(GameLogic.transform(direction, state.board) |> GameLogic.addCell)
-      )
+      ReasonReact.Update(genState(GameLogic.shift(direction, state.board) |> GameLogic.addCell))
     | Restart => ReasonReact.Update(genState(GameLogic.make()))
     },
   render: ({state, reduce}) =>
