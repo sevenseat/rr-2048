@@ -7,8 +7,22 @@ type direction =
   | Down;
 
 type orientPhase =
-  | PreTransform
-  | PostTransform;
+  | Pre
+  | Post;
+
+let all = (x) => {
+  let rec xs = [x, ...xs];
+  xs
+};
+
+let rec take = (n, ls) =>
+  switch ls {
+  | [] => []
+  | _ when n === 0 => []
+  | [x, ...xs] => [x, ...take(n - 1, xs)]
+  };
+
+let padTrim = (e, n, ls) => take(n, ls @ all(e));
 
 let rec transpose = (ls) =>
   switch ls {
@@ -17,37 +31,29 @@ let rec transpose = (ls) =>
   | ls => [List.map(List.hd, ls), ...transpose(List.map(List.tl, ls))]
   };
 
-let transform = (direction, board) => {
-  let transformList = (cells) => {
-    let rec transformHelper = (cells) =>
-      switch cells {
-      | [] => []
-      | [0, ...rest] => transformHelper(rest)
-      | [head, 0, ...rest] => transformHelper([head, ...rest])
-      | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
-      | [head, ...rest] => [head, ...transformHelper(rest)]
-      };
-    let rec padRight = (minLength, padEntry, list) =>
-      switch (minLength <= 0, list) {
-      | (true, _) => list
-      | (false, []) => [padEntry, ...padRight(minLength - 1, padEntry, [])]
-      | (false, [head, ...rest]) => [head, ...padRight(minLength - 1, padEntry, rest)]
-      };
-    cells |> transformHelper |> padRight(List.length(cells), 0)
-  };
-  let orientBoard = (direction, phase, board) =>
-    switch (direction, phase) {
-    | (Left, _) => board
-    | (Right, _) => List.map(List.rev, board)
-    | (Up, _) => board |> transpose
-    | (Down, PreTransform) => board |> List.rev |> transpose
-    | (Down, PostTransform) => board |> transpose |> List.rev
+let transformLeft = (board) => {
+  let rec transformHelper = (ls) =>
+    switch ls {
+    | [] => []
+    | [0, ...rest] => transformHelper(rest)
+    | [head, 0, ...rest] => transformHelper([head, ...rest])
+    | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
+    | [head, ...rest] => [head, ...transformHelper(rest)]
     };
-  board
-  |> orientBoard(direction, PreTransform)
-  |> List.map(transformList)
-  |> orientBoard(direction, PostTransform)
+  List.map((ls) => padTrim(0, List.length(ls), transformHelper(ls)), board)
 };
+
+let orient = (direction, phase, board) =>
+  switch (direction, phase) {
+  | (Left, _) => board
+  | (Right, _) => List.map(List.rev, board)
+  | (Up, _) => board |> transpose
+  | (Down, Pre) => board |> List.rev |> transpose
+  | (Down, Post) => board |> transpose |> List.rev
+  };
+
+let transform = (direction, board) =>
+  board |> orient(direction, Pre) |> transformLeft |> orient(direction, Post);
 
 let randomInt = (num) => Js.Math.random() *. float_of_int(num) |> Js.Math.floor_int;
 
