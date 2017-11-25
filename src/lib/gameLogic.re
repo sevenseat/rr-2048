@@ -10,6 +10,13 @@ type orientPhase =
   | PreTransform
   | PostTransform;
 
+let rec transpose = (ls) =>
+  switch ls {
+  | [] => []
+  | [[], ..._] => []
+  | ls => [List.map(List.hd, ls), ...transpose(List.map(List.tl, ls))]
+  };
+
 let transform = (direction, board) => {
   let transformList = (cells) => {
     let rec transformHelper = (cells) =>
@@ -28,24 +35,14 @@ let transform = (direction, board) => {
       };
     cells |> transformHelper |> padRight(List.length(cells), 0)
   };
-  let orientBoard = (direction, phase, board) => {
-    let rec transpose = (board) =>
-      switch board {
-      | [] => []
-      | [[], ...xss] => transpose(xss)
-      | [[x, ...xs], ...xss] => [
-          [x, ...List.map(List.hd, xss)],
-          ...transpose([xs, ...List.map(List.tl, xss)])
-        ]
-      };
+  let orientBoard = (direction, phase, board) =>
     switch (direction, phase) {
     | (Left, _) => board
     | (Right, _) => List.map(List.rev, board)
     | (Up, _) => board |> transpose
     | (Down, PreTransform) => board |> List.rev |> transpose
     | (Down, PostTransform) => board |> transpose |> List.rev
-    }
-  };
+    };
   board
   |> orientBoard(direction, PreTransform)
   |> List.map(transformList)
