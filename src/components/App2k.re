@@ -9,20 +9,20 @@ type state = {
   score: int
 };
 
-let genState = (board) => {board, score: GameLogic.scoreBoard(board)};
+let genState = (board) => {board, score: GameLogic.score(board)};
 
 let component = ReasonReact.reducerComponent("App2k");
 
 let make = (_children) => {
   ...component,
-  initialState: () => genState(GameLogic.makeBoard()),
+  initialState: () => genState(GameLogic.make()),
   reducer: (action, state) =>
     switch action {
     | UserEvent(direction) =>
       ReasonReact.Update(
-        genState(GameLogic.transformBoard(direction, state.board) |> GameLogic.addCell)
+        genState(GameLogic.transform(direction, state.board) |> GameLogic.addCell)
       )
-    | Restart => ReasonReact.Update(genState(GameLogic.makeBoard()))
+    | Restart => ReasonReact.Update(genState(GameLogic.make()))
     },
   render: ({state, reduce}) =>
     <div className="Dodo">

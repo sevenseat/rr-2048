@@ -1,3 +1,5 @@
+type boardType = list(list(int));
+
 type direction =
   | Left
   | Right
@@ -8,12 +10,13 @@ type orientPhase =
   | PreTransform
   | PostTransform;
 
-let transformBoard = (direction, board) => {
+let transform = (direction, board) => {
   let transformList = (cells) => {
     let rec transformHelper = (cells) =>
       switch cells {
       | [] => []
       | [0, ...rest] => transformHelper(rest)
+      | [head, 0, ...rest] => transformHelper([head, ...rest])
       | [head, next, ...rest] when head === next => [head + next, ...transformHelper(rest)]
       | [head, ...rest] => [head, ...transformHelper(rest)]
       };
@@ -78,14 +81,14 @@ let addCell = (board) => {
   |> (((b, _)) => List.rev(b))
 };
 
-let makeBoard = () =>
+let make = () =>
   [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] |> addCell |> addCell |> addCell;
 
-let scoreBoard = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_left((+), 0);
+let score = (board) => board |> List.map(List.fold_left((+), 0)) |> List.fold_left((+), 0);
 
-let testGameover = (board) =>
+let gameIsOver = (board) =>
   List.(
     [Left, Up]
-    |> exists((direction) => transformBoard(direction, board) |> flatten |> exists((===)(0)))
+    |> exists((direction) => transform(direction, board) |> flatten |> exists((===)(0)))
     |> (!)
   );
