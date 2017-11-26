@@ -54,6 +54,6 @@ forward.
 
 * [ ] Fix keyboard bindings.... Right now the user has to click first.
 * [ ] Detect game-over
-* [ ] Gestures
+* [x] Gestures
 * [ ] Delay adding new cells after transform for a fraction of a second
 * [ ] Retitle the page
