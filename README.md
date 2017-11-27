@@ -25,22 +25,20 @@ Reason React. It was my first Reason React project, and is basically a fork of
     require annotating everything. It just worked. I was floored when the
     typechecking found errors within my JSX. **Wowzers**.
 * I did have a number of challenges that took a little while to work-through
-  * I found the module system a bit confusing. I couldn't figure-out how to
+  * ~~I found the module system a bit confusing. I couldn't figure-out how to
     create private helper-functions without putting them within the definition
     of the public function. That ended-up working for this project, however it
-    makes it impossible to share these helper functions wihtin the module, and
-    it made unit testing harder.
+    makes it impossible to share these helper functions within the module, and
+    it made unit testing harder.~~
+    [Module Signatures](https://reasonml.github.io/guide/language/module#signatures)
+    solve this ompletely
   * Jest doesn't fully support Bucklescript, yet. I worked mostly with
     linked-lists, but those aren't well supported by Jest. I usually had to
     convert an list to an array for testing purposes.
-  * ReasonML has limited documentation, but OCAML has a ton. For good or for
-    bad, I found myself having to learn the OCAML syntax to get things done. The
-    [playground](https://reasonml.github.io/try) proved invaluable, as I would
-    paste-in OCAML and instantly get out Reason.
-  * Similarly, I spent way too much time trying to figure out OCAML type
-    definitions. I'm sure they will become second-nature, but they are not yet.
-  - The native OCAML library is pretty limited. I found myself wishing for a
-    number of javascript functions at times
+  * Given its newness, ReasonML there aren't a ton of Reason example code and
+    Stack Overflow ansers out there. But there's a ton for OCAML, which maps 1:1
+    to reason. The [playground](https://reasonml.github.io/try) proved
+    invaluable, as I would paste-in OCAML and instantly get out Reason.
   - Reason / Bucklescript / React is HEAVY. This very light applicaiton is 58kb
     gzipped.... My code is a few hundred lines... THat's a lot of library code.
     I was somewhat surprised to see how much of it was Bucklescript code to
