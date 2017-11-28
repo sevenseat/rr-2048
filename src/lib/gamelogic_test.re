@@ -39,6 +39,36 @@ describe(
 );
 
 describe(
+  "addCell",
+  () => {
+    test("empty", () => [[]] |> addCell |> expect |> toEqual([[]]));
+    test(
+      "adds one cell",
+      () =>
+        [[0, 0], [0, 0]]
+        |> addCell
+        |> List.flatten
+        |> List.filter((!==)(0))
+        |> List.length
+        |> expect
+        |> toEqual(1)
+    );
+    test(">=2", () => [[0, 0], [0, 0]] |> addCell |> score |> expect |> toBeGreaterThanOrEqual(2));
+    test("<=2", () => [[0, 0], [0, 0]] |> addCell |> score |> expect |> toBeLessThanOrEqual(4));
+    test(
+      "full",
+      () =>
+        [[8, 8], [8, 8]]
+        |> addCell
+        |> List.flatten
+        |> Array.of_list
+        |> expect
+        |> toEqual([|8, 8, 8, 8|])
+    )
+  }
+);
+
+describe(
   "gameIsOver",
   () => {
     test("empty", () => expect(gameIsOver([[]])) |> toEqual(true));

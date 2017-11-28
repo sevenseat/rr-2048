@@ -55,33 +55,35 @@ let orient = (direction, phase, board) =>
 let shift = (direction, board) =>
   board |> orient(direction, Pre) |> shiftLeft |> orient(direction, Post);
 
+let unFlatten = (n, list) => {
+  let rec helper = (i, acc, ls) =>
+    switch (i, ls) {
+    | (_, []) => [List.rev(acc)]
+    | (0, _) => [List.rev(acc)] @ helper(n, [], ls)
+    | (_, [h, ...t]) => helper(i - 1, [h, ...acc], t)
+    };
+  helper(n, [], list)
+};
+
 let randomInt = (num) => Js.Math.random() *. float_of_int(num) |> Js.Math.floor_int;
 
 let addCell = (board) => {
-  let numZeros = List.(board |> flatten |> filter((===)(0)) |> length);
-  let newCellPos = randomInt(numZeros);
-  let newCellVal = [|2, 2, 2, 2, 4|][randomInt(5)];
-  let procRow = (row, startZeros) =>
-    row
-    |> List.fold_left(
-         ((cells, zerosFound), cell) =>
-           switch (cell, zerosFound) {
-           | (0, z) when z === newCellPos => ([newCellVal, ...cells], zerosFound + 1)
-           | (0, _) => ([0, ...cells], zerosFound + 1)
-           | (cell, _) => ([cell, ...cells], zerosFound)
-           },
-         ([], startZeros)
+  let flatBoard = List.flatten(board);
+  let numZeros = List.(flatBoard |> filter((===)(0)) |> length);
+  switch numZeros {
+  | 0 => board
+  | _ =>
+    let newCellPos = randomInt(numZeros);
+    flatBoard
+    |> List.mapi(
+         (i, cell) =>
+           switch i {
+           | i when i === newCellPos => [|2, 2, 2, 2, 4|][randomInt(5)]
+           | _ => cell
+           }
        )
-    |> (((rows, zeros)) => (List.rev(rows), zeros));
-  board
-  |> List.fold_left(
-       ((rows, zerosFound), row) => {
-         let (resRow, resZeros) = procRow(row, zerosFound);
-         ([resRow, ...rows], resZeros)
-       },
-       ([], 0)
-     )
-  |> (((b, _)) => List.rev(b))
+    |> unFlatten(board |> List.hd |> List.length)
+  }
 };
 
 let make = () =>
