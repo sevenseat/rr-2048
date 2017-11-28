@@ -13,10 +13,5 @@ let make = (~score, ~onReplay, _children) => {
           <div className="score"> (ReasonReact.stringToElement(string_of_int(score))) </div>
         </div>
       </div>
-      <div className="replay">
-        <button className="replay-button" id="replay" onClick=onReplay>
-          (ReasonReact.stringToElement("Try again"))
-        </button>
-      </div>
     </div>
 };

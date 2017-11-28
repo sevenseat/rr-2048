@@ -12,3 +12,8 @@
   margin: 0px auto;
   width: 280px;
 }
+
+.github_link {
+  appearance: none;
+  color: #c5f6fa;
+}

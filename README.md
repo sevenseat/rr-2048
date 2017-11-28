@@ -50,8 +50,9 @@ forward.
 
 ## Todos
 
-* [ ] Fix keyboard bindings.... Right now the user has to click first.
-* [ ] Detect game-over
+* [ ] Fix keyboard bindings.... Right now the user has to click first. A bit
+      stuck. **Could use help here from any react experts**
+* [x] Detect game-over
 * [x] Gestures
 * [x] Delay adding new cells after transform for a fraction of a second
 * [x] Retitle the page
