@@ -16,10 +16,10 @@ let all = (x) => {
 };
 
 let rec take = (n, ls) =>
-  switch ls {
-  | [] => []
-  | _ when n === 0 => []
-  | [x, ...xs] => [x, ...take(n - 1, xs)]
+  switch (n, ls) {
+  | (_, []) => []
+  | (0, _) => []
+  | (_, [x, ...xs]) => [x, ...take(n - 1, xs)]
   };
 
 let padTrim = (e, n, ls) => take(n, ls @ all(e));
