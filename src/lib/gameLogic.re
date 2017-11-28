@@ -73,16 +73,16 @@ let addCell = (board) => {
   switch numZeros {
   | 0 => board
   | _ =>
+    let newValue = [|2, 2, 2, 2, 4|][randomInt(5)];
     let newCellPos = randomInt(numZeros);
-    flatBoard
-    |> List.mapi(
-         (i, cell) =>
-           switch i {
-           | i when i === newCellPos => [|2, 2, 2, 2, 4|][randomInt(5)]
-           | _ => cell
-           }
-       )
-    |> unFlatten(board |> List.hd |> List.length)
+    let rec placeZero = (zerosFound, fb) =>
+      switch (fb, zerosFound === newCellPos) {
+      | ([], _) => []
+      | ([0, ...t], true) => [newValue, ...placeZero(zerosFound + 1, t)]
+      | ([0, ...t], false) => [0, ...placeZero(zerosFound + 1, t)]
+      | ([h, ...t], _) => [h, ...placeZero(zerosFound, t)]
+      };
+    flatBoard |> placeZero(0) |> unFlatten(board |> List.hd |> List.length)
   }
 };
 
